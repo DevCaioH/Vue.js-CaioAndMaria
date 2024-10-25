@@ -1,6 +1,5 @@
 <template>
   <div class="container-fluid p-3 mb-5">
-
     <h1 class="display-4">Lembranças que aquecem o coração!</h1>
     <hr />
 
@@ -34,6 +33,7 @@
         @click="showCard('button1')"
         class="btn btn-outline-dark selection boldAndColor selectionHover"
         type="button"
+        name="button1"
         data-bs-toggle="collapse"
         href="#multiCollapseExample1"
         role="button"
@@ -46,6 +46,7 @@
         @click="showCard('button2')"
         class="btn btn-outline-dark selection boldAndColor selectionHover"
         type="button"
+        name="button2"
         data-bs-toggle="collapse"
         data-bs-target="#multiCollapseExample2"
         aria-expanded="false"
@@ -55,12 +56,13 @@
       </button>
       <button
         @click="showCard('button3')"
-        class="btn btn-outline-dark selection boldAndColor selectionHover"
+        class="btn btn-outline-dark selection boldAndColor selectionHover activate"
         type="button"
+        name="button3"
         data-bs-toggle="collapse"
-        data-bs-target=".multi-collapse"
+        data-bs-target="#multiCollapseExample3"
         aria-expanded="false"
-        aria-controls="multiCollapseExample1 multiCollapseExample2"
+        aria-controls="multiCollapseExample3"
       >
         O Noivado
       </button>
@@ -143,7 +145,7 @@
           <div v-if="activeButton == 'button2'" class="card card-body beggin">
             <div class="media">
               <img
-                src="../assets/IMG_3332.jpg"
+                src="../assets/IMG_3898.png"
                 class="figure-img img-fluid rounded"
                 alt="Imagem de um quadrado genérico com bordas arredondadas, em uma figure."
               />
@@ -192,10 +194,79 @@
             </div>
           </div>
         </div>
+
+        <div class="collapse multi-collapse" id="multiCollapseExample3">
+          <div v-if="activeButton == 'button3'" class="card card-body beggin">
+            <div class="media">
+              <img
+                src="../assets/IMG_6438.jpg"
+                class="figure-img img-fluid rounded"
+                alt="Imagem de um quadrado genérico com bordas arredondadas, em uma figure."
+              />
+              <div class="media-body">
+                <h5 class="mt-6">O Noivado</h5>
+                <p class="mb-0">
+                  Sabe, conforme os dias foram se passando, eu fui me
+                  apaixonando cada vez mais por você, como se cada risada, cada
+                  olhar e cada conversa nossa fossem as peças de um
+                  quebra-cabeça que, aos poucos, foram se encaixando. Cada
+                  momento que passamos juntos foi como uma nova página no nosso
+                  livro de amor, e a história que estamos escrevendo é
+                  simplesmente incrível.
+                </p>
+                <br />
+                <p class="mb-0">
+                  A gente enfrentou altos e baixos, e mesmo nas brigas e
+                  discussões que tivemos, nunca deixamos que nada nos separasse.
+                  Na verdade, eu sinto que cada desafio que apareceu no nosso
+                  caminho só serviu para nos unir ainda mais. Nós somos como
+                  dois guerrilheiros lutando juntos, construindo um amor que é
+                  mais forte a cada dia. Lembro de momentos em que pensei que
+                  poderíamos desmoronar, mas aí você olhava nos meus olhos e
+                  tudo voltava a fazer sentido. Você é a razão pela qual eu
+                  sempre quero lutar e construir algo lindo.
+                </p>
+                <br />
+                <p class="mb-0">
+                  E aí, depois de dois anos vivendo essa aventura juntos, eu
+                  decidi fazer algo que talvez você não esperasse, mas que no
+                  fundo, eu sabia que era o próximo passo: pedi você em
+                  casamento! Te ver surpresa naquele momento foi simplesmente
+                  mágico. A sua reação foi como um sonho se tornando realidade,
+                  e, sem dúvida, foi a segunda melhor escolha da minha vida. A
+                  primeira? Ah, isso é fácil: foi ter te pedido em namoro. Cada
+                  segundo ao seu lado é um tesouro que guardo com carinho, e eu
+                  nunca quero perder isso.
+                </p>
+                <br />
+                <p class="mb-0">
+                  Que venham mais dias incríveis ao seu lado! Quero que a gente
+                  continue a nos amar, a rir até doer a barriga e a enfrentar
+                  tudo junto. Você é o meu porto seguro, e não importa o que
+                  aconteça, eu sempre vou estar ao seu lado, segurando a sua mão
+                  e te apoiando em cada passo dessa jornada.
+                </p>
+                <br />
+                <p class="mb-0">
+                  Prometo que estarei aqui, sempre pronto para te abraçar e
+                  fazer você se sentir a pessoa mais especial do mundo, porque é
+                  exatamente isso que você é para mim. Juntos, podemos criar uma
+                  vida cheia de sonhos, aventuras e, acima de tudo, muito amor.
+                  Você é a minha inspiração, e mal posso esperar para viver tudo
+                  isso com você, eternamente. Te amo mais do que palavras podem
+                  expressar, e estou animado para cada capítulo que ainda vamos
+                  escrever juntos!
+                </p>
+
+                <br />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <iframe 
-        v-if="expand"
+      <iframe
+        v-if="activeButton"
         class="spotify"
         style="border-radius: 12px"
         src="https://open.spotify.com/embed/playlist/5lmofNsZx7x0WhLdJe2w6j?utm_source=generator&theme=0"
@@ -209,25 +280,29 @@
 </template>
 
 <script>
-import AlertComponent from "./Alert.vue";
 export default {
   name: "Info-Container",
-  componets: { AlertComponent },
   data: function () {
     return {
-      expand: false,
       activeButton: null,
-     
     };
   },
   methods: {
     showCard(divId) {
       if (this.activeButton === divId) {
-        this.expand = false;
+        const elements = document.getElementsByName(divId);
+        for (let e of elements) {
+          e.classList.remove("btn-color-change");
+          e.classList.add("btn-outline-dark");
+        }
+
         this.activeButton = null;
       } else {
-        
-        this.expand = true;
+        const elements = document.getElementsByName(divId);
+        for (let e of elements) {
+          e.classList.remove("btn-outline-dark");
+          e.classList.add("btn-color-change");
+        }
         this.activeButton = divId;
       }
     },
@@ -235,3 +310,5 @@ export default {
 };
 </script>
 
+<style>
+</style>

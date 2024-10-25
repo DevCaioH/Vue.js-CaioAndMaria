@@ -127,3 +127,8 @@ hr {
     height:122 px;
     margin: 0px;
 }
+
+.btn-color-change{
+    background-color: #6d6d48;
+    color: white;
+}
